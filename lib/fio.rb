@@ -9,7 +9,7 @@ module Fio
 			output = `fio -v`
 			puts "#{output} has been already installed"
 		else
-			 install
+			 self.install
 		end
 		
 	end
