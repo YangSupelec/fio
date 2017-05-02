@@ -9,7 +9,7 @@ module Fio
 			puts "#{output} has been already installed"
 		else
 			include Install 
-			install
+			Install.install
 		end
 		
 	end
