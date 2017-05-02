@@ -40,6 +40,9 @@ module Fio
 		else
 			install
 		end
+
+		output =`sudo DISK=/dev/sda fio ../lib/fio/job_file_rand_write`
+		puts output
 		
 	end
 end
