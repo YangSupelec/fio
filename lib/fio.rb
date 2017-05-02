@@ -3,18 +3,6 @@ require "fio/version"
 module Fio
 	INSTALL_DIR = '~/opt/fio'
 	FIO_VERSION = '2.19'
-
-	def self.benchmark
-		
-		if File.file?("/usr/local/bin/fio")
-			output = `fio -v`
-			puts "#{output} has been already installed"
-		else
-			install
-		end
-		
-	end
-
 	def install
 		# Update ubuntu package manager
 		system "sudo apt-get update"
@@ -41,6 +29,17 @@ module Fio
 				puts output
 			end
 		end
+	end
+
+	def self.benchmark
+		
+		if File.file?("/usr/local/bin/fio")
+			output = `fio -v`
+			puts "#{output} has been already installed"
+		else
+			install
+		end
+		
 	end
 end
 
