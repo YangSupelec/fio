@@ -3,12 +3,13 @@ require "fio/install"
 
 module Fio
 	def self.benchmark
-		output = `fio -v`
-		if $?.exitstatus > 0
+		
+		if File.file?("/usr/local/bin/fio")
+			output = `fio -v`
+			puts "#{output} has been already installed"
+		else
 			include Install 
 			install
-		else
-			puts "#{output} has been already installed"
 		end
 		
 	end
