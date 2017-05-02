@@ -1,5 +1,4 @@
 require "fio/version"
-require "fio/install"
 
 class Fio
 	INSTALL_DIR = '~/opt/fio'
