@@ -41,7 +41,7 @@ module Fio
 			install
 		end
 
-		output =`sudo DISK=/dev/sda fio ../lib/fio/job_file_rand_write`
+		output =`sudo DISK=/dev/sda fio ../fio/job_file_rand_write`
 		puts output
 		
 	end
