@@ -3,6 +3,7 @@ require "fio/version"
 module Fio
 	INSTALL_DIR = '~/opt/fio'
 	FIO_VERSION = '2.19'
+	module_function
 	def install
 		# Update ubuntu package manager
 		system "sudo apt-get update"
@@ -31,7 +32,7 @@ module Fio
 		end
 	end
 
-	def self.benchmark
+	def benchmark
 		
 		if File.file?("/usr/local/bin/fio")
 			output = `fio -v`
