@@ -1,6 +1,6 @@
 require "fio/version"
 
-class Fio
+module Fio
 	INSTALL_DIR = '~/opt/fio'
 	FIO_VERSION = '2.19'
 
