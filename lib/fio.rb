@@ -14,4 +14,4 @@ module Fio
 	end
 end
 
-benchmark
+Fio.benchmark
