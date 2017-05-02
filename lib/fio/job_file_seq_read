@@ -1,7 +1,4 @@
-[fio-job-1]
-readwrite=rw
-rwmixread=0
-blocksize=4K
+[global]
 ioengine=libaio
 numjobs=$ncpus
 thread=1
@@ -12,13 +9,14 @@ iodepth_batch_complete=16
 group_reporting=1
 ramp_time=5
 norandommap=1
-description=fio random 4K write peak IOPS
 time_based=1
-runtime=30
+runtime=15
 randrepeat=0
-write_bw_log=fio-job-1
-write_iops_log=fio-job-1
- 
-
 filename=${DISK}
 cpus_allowed=1-$ncpus
+
+[fio-job]
+description=fio seq 128K read peak bindwidth
+readwrite=read
+rwmixread=100
+blocksize=128K
