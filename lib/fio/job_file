@@ -17,7 +17,6 @@ time_based=1
 runtime=30
 randrepeat=0
 write_bw_log=fio-job-1
-write_lat_log=fio-job-1
 write_iops_log=fio-job-1
  
 
