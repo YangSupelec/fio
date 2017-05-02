@@ -1,7 +1,7 @@
 module Install
 	INSTALL_DIR = '~/opt/fio'
 	FIO_VERSION = '2.19'
-	def install
+	def self.install
 		# Update ubuntu package manager
 		system "sudo apt-get update"
 
