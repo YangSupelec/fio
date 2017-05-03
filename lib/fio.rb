@@ -32,19 +32,29 @@ module Fio
 		end
 	end
 
+	def get_device_info
+		model_output = `sudo parted -l|grep Model|awk -F ":" '{print $2}'`
+		disk_output = `sudo parted -l|grep "Disk /"|awk -F ":| " '{print $2}'`
+		puts model_output
+		puts disk_output
+	end
+
 	def benchmark
 		
-		if File.file?("/usr/local/bin/fio")
-			output = `fio -v`
-			puts "#{output} has been already installed"
-		else
-			install
-		end
+		# if File.file?("/usr/local/bin/fio")
+		# 	output = `fio -v`
+		# 	puts "#{output} has been already installed"
+		# else
+		# 	install
+		# end
+
+		# Detect disk information 
+
 
 		lib = File.expand_path('../fio/job_file', __FILE__)
 		Dir.foreach(lib) { |file|
 			if file.include? "job_file_"
-				puts file
+				puts "#{lib}/#{file}"
 			end
 			#output =`sudo DISK=/dev/sda fio #{file}`
 			#puts output
@@ -54,4 +64,4 @@ module Fio
 	end
 end
 
-Fio.benchmark
+Fio.get_device_info
