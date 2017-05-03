@@ -42,8 +42,12 @@ module Fio
 		end
 
 		lib = File.expand_path('../fio/job_file', __FILE__)
-		output =`sudo DISK=/dev/sda fio #{lib}/job_file_rand_write`
-		puts output
+		Dir.foreach(lib) { |file|
+			puts file
+			#output =`sudo DISK=/dev/sda fio #{file}`
+			#puts output
+		}
+		
 		
 	end
 end
