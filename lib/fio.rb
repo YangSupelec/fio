@@ -41,7 +41,8 @@ module Fio
 			install
 		end
 
-		output =`sudo DISK=/dev/sda fio ../fio/job_file_rand_write`
+		lib = File.expand_path('../fio/job_file', __FILE__)
+		output =`sudo DISK=/dev/sda fio #{lib}/job_file_rand_write`
 		puts output
 		
 	end
