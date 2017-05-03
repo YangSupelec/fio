@@ -43,7 +43,9 @@ module Fio
 
 		lib = File.expand_path('../fio/job_file', __FILE__)
 		Dir.foreach(lib) { |file|
-			puts file
+			if file.include? "job_file_"
+				puts file
+			end
 			#output =`sudo DISK=/dev/sda fio #{file}`
 			#puts output
 		}
