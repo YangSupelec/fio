@@ -33,8 +33,8 @@ module Fio
 	end
 
 	def get_device_info
-		model_output = `sudo parted -l|grep Model|awk -F ":" '{print $2}'`
-		disk_output = `sudo parted -l|grep "Disk /"|awk -F ":| " '{print $2}'`
+		model_output = `sudo parted -l|grep 'Model.*scsi'|awk -F ":" '{print $2}'`
+		disk_output = `sudo parted -l|grep 'Disk /dev/sd'|awk -F ":| " '{print $2}'`
 		models = []
 		disks = []
 		model_output.each_line do |line|
@@ -62,7 +62,6 @@ module Fio
 		devices.each do |key, value| 
 			Dir.foreach(job_dir) do |file|
 				if file.include? "job_file_"
-					puts value
 					puts "#{job_dir}/#{file}"
 					output =`sudo DISK=#{value} fio #{job_dir}/#{file}`
 					puts output
