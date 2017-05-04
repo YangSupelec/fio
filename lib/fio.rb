@@ -35,16 +35,15 @@ module Fio
 	def get_device_info
 		model_output = `sudo parted -l|grep Model|awk -F ":" '{print $2}'`
 		disk_output = `sudo parted -l|grep "Disk /"|awk -F ":| " '{print $2}'`
-		model_list = []
-		disk_list = []
+		models = []
+		disks = []
 		model_output.each_line do |line|
-			model_list << line
+			models << line.strip
 		end
 		disk_output.each_line do |line|
-			disk_list << line
+			disks << line
 		end
-		puts model_list[0]
-		puts disk_list[0]
+		models.zip(disks)
 	end
 
 	def benchmark
@@ -56,20 +55,21 @@ module Fio
 		# 	install
 		# end
 
+		job_dir = File.expand_path('../fio/job_file', __FILE__)
+
 		# Detect disk information 
-
-
-		lib = File.expand_path('../fio/job_file', __FILE__)
-		Dir.foreach(lib) { |file|
-			if file.include? "job_file_"
-				puts "#{lib}/#{file}"
+		devices = get_device_info
+		devices.each do |key, value| 
+			Dir.foreach(job_dir) do |file|
+				if file.include? "job_file_"
+					output =`sudo DISK=#{value} fio #{job_dir}/#{file}`
+					puts output
+				end
 			end
-			#output =`sudo DISK=/dev/sda fio #{file}`
-			#puts output
-		}
+		end
 		
 		
 	end
 end
 
-Fio.get_device_info
+Fio.benchmark
