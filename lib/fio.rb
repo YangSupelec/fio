@@ -41,19 +41,19 @@ module Fio
 			models << line.strip
 		end
 		disk_output.each_line do |line|
-			disks << line
+			disks << line.strip
 		end
 		models.zip(disks)
 	end
 
 	def benchmark
 		
-		# if File.file?("/usr/local/bin/fio")
-		# 	output = `fio -v`
-		# 	puts "#{output} has been already installed"
-		# else
-		# 	install
-		# end
+		if File.file?("/usr/local/bin/fio")
+			output = `fio -v`
+			puts "#{output} has been already installed"
+		else
+			install
+		end
 
 		job_dir = File.expand_path('../fio/job_file', __FILE__)
 
@@ -62,6 +62,8 @@ module Fio
 		devices.each do |key, value| 
 			Dir.foreach(job_dir) do |file|
 				if file.include? "job_file_"
+					puts value
+					puts "#{job_dir}/#{file}"
 					output =`sudo DISK=#{value} fio #{job_dir}/#{file}`
 					puts output
 				end
