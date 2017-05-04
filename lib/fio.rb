@@ -35,8 +35,16 @@ module Fio
 	def get_device_info
 		model_output = `sudo parted -l|grep Model|awk -F ":" '{print $2}'`
 		disk_output = `sudo parted -l|grep "Disk /"|awk -F ":| " '{print $2}'`
-		puts model_output
-		puts disk_output
+		model_list = []
+		disk_list = []
+		model_output.each_line do |line|
+			model_list << line
+		end
+		disk_output.each_line do |line|
+			disk_list << line
+		end
+		puts model_list[0]
+		puts disk_list[0]
 	end
 
 	def benchmark
