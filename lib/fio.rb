@@ -46,6 +46,14 @@ module Fio
 		models.zip(disks)
 	end
 
+	def post_process_benchmark(output)
+		arr = output.split(%r{,|=})
+		res = Hash.new
+		res[arr[0]] = arr[1]
+		res[arr[2]] = arr[3]
+		return res
+	end
+
 	def benchmark
 		
 		if File.file?("/usr/local/bin/fio")
@@ -62,9 +70,8 @@ module Fio
 		devices.each do |key, value| 
 			Dir.foreach(job_dir) do |file|
 				if file.include? "job_file_"
-					puts "#{job_dir}/#{file}"
-					output =`sudo DISK=#{value} fio #{job_dir}/#{file}`
-					puts output
+					output =`sudo DISK=#{value} fio #{job_dir}/#{file} | grep -E 'BW' | awk '{print $2 $3}'`
+					unit_result = post_process_benchmark(output)
 				end
 			end
 		end
