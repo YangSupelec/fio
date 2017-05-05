@@ -46,7 +46,22 @@ module Fio
 		models.zip(disks)
 	end
 
-	def post_process_benchmark(output)
+	def post_process_benchmark_key(output)
+		key = ""
+		if output.include?("seq_read")
+			key = "SR"
+		elsif output.include?("seq_write")
+			key = "SW"
+		elsif output.include?("rand_read")
+			key = "RR"
+		else
+			key = "RW"
+		end
+
+		return key		
+	end
+
+	def post_process_benchmark_value(output)
 		arr = output.split(%r{,|=})
 		res = Hash.new
 		res[arr[0]] = arr[1]
@@ -67,16 +82,26 @@ module Fio
 
 		# Detect disk information 
 		devices = get_device_info
+		disk_result = Hash.new
 		devices.each do |key, value| 
+			# Format the benchmark result of every device to a hash object
+			device_result = Hash.new
 			Dir.foreach(job_dir) do |file|
 				if file.include? "job_file_"
-					output =`sudo DISK=#{value} fio #{job_dir}/#{file} | grep -E 'BW' | awk '{print $2 $3}'`
-					unit_result = post_process_benchmark(output)
+					job_key = post_process_benchmark_key(file)
+
+					value_output =`sudo DISK=#{value} fio #{job_dir}/#{file} | grep -E 'BW' | awk '{print $2 $3}'`
+					job_value = post_process_benchmark_value(value_output)
+					device_result[job_key] = job_value
 				end
 			end
+			disk_result[key] = device_result
 		end
-		
-		
+
+		# Write result to a json file
+		puts disk_result
+		puts disk_result.to_s
+	
 	end
 end
 
