@@ -102,7 +102,7 @@ module Fio
 		# Write result to a json file named by time
 		time = Time.now.strftime("%M_%H_%d_%m_%Y")
 		
-		File.new("fio_#{time}.json",  "w+") { |f|
+		File.open("fio_#{time}.json",  "w+") { |f|
 			f << disk_result.to_json
 		}
 	
