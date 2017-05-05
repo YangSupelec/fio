@@ -1,4 +1,5 @@
 require "fio/version"
+require "json"
 
 module Fio
 	INSTALL_DIR = '~/opt/fio'
@@ -98,9 +99,12 @@ module Fio
 			disk_result[key] = device_result
 		end
 
-		# Write result to a json file
-		puts disk_result
-		puts disk_result.to_s
+		# Write result to a json file named by time
+		time = Time.now.strftime("%M_%H_%d_%m_%Y")
+		
+		File.new("fio_#{time}.json",  "w+") { |f|
+			f << disk_result.to_json
+		}
 	
 	end
 end
