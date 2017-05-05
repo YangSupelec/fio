@@ -101,9 +101,15 @@ module Fio
 
 		# Write result to a json file named by time
 		time = Time.now.strftime("%M_%H_%d_%m_%Y")
+		title = "fio_#{time}"
 		
-		File.open("fio_#{time}.json",  "w+") { |f|
+		File.open("#{title}.json",  "w+") { |f|
 			f << disk_result.to_json
+		}
+
+		# Get result as a hash object from json file
+		File.open("#{title}.json",  "r+") { |f|
+			data_hash = JSON.parse(f)
 		}
 	
 	end
