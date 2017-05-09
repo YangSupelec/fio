@@ -85,14 +85,28 @@ module Fio
 		devices = get_device_info
 		disk_result = Hash.new
 		devices.each do |key, value| 
+			# TODO delete
+			puts "#{key} is #{value}"
+
 			# Format the benchmark result of every device to a hash object
 			device_result = Hash.new
 			Dir.foreach(job_dir) do |file|
 				if file.include? "job_file_"
+					# TODO delete
+					puts "Test mode : #{file}"
+
 					job_key = post_process_benchmark_key(file)
 
 					value_output =`sudo DISK=#{value} fio #{job_dir}/#{file} | grep -E 'BW' | awk '{print $2 $3}'`
+
+					# TODO delete 
+					puts "Original output : #{value_output}"
+
 					job_value = post_process_benchmark_value(value_output)
+
+					# TODO delete 
+					puts "After process : #{job_value}"
+
 					device_result[job_key] = job_value
 				end
 			end
