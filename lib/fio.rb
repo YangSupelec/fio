@@ -125,6 +125,9 @@ module Fio
 		File.open("#{title}.json",  "r+") { |f|
 			data_hash = JSON.parse(f)
 		}
+
+		# TODO delete 
+		puts data_hash
 	
 	end
 end
